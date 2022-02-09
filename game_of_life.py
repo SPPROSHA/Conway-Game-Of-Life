@@ -83,21 +83,21 @@ def update_grid(grid: np.ndarray) -> np.ndarray:
     # 4. Reproduction: At any dead cell with exactly 3 live neighbours, a new live cell is born.
 
     N = len(grid)
-    output_grid = np.zeros((N,N))
+    output_grid = np.zeros((N,N), dtype=int)
 
     for i in range(N):
         for j in range(N):
-            
+            current_cell = grid[i][j]
             neighbours = get_neighbours(i,j,grid)
 
             if neighbours == 3:
-                current_cell = 1
-            elif neighbours < 2 and neighbours > 3:
-                current_cell = 0
+                new_cell = 1
+            elif neighbours < 2 or neighbours > 3:
+                new_cell = 0
             else:
-                current_cell = grid[i][j]
+                new_cell = current_cell
 
-            output_grid[i][j] = current_cell
+            output_grid[i][j] = new_cell
 
     return output_grid
             
@@ -122,14 +122,13 @@ def game_of_life(N: int, T: int, O: str):
     # 3. Creating a gif animation called "output.gif" with T + 1 grid images (start grid + T updated grids).
   
     
-    new_grid = initialize_grid(N)
+    grid = initialize_grid(N)
     results = []
-    results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((256,256)))
+    results.append(Image.fromarray(255 * grid.astype(np.uint8)).convert('RGB').resize((256,256)))
 
     for t in range(T):
-        init_grid = new_grid
-        new_grid = update_grid(init_grid)
-        results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((256,256)))
+        grid = update_grid(grid)
+        results.append(Image.fromarray(255 * grid.astype(np.uint8)).convert('RGB').resize((256,256)))
 
     results[0].save(O,
                save_all=True, append_images=results[1:],duration=800, loop=0)
