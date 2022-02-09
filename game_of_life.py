@@ -124,15 +124,15 @@ def game_of_life(N: int, T: int, O: str):
     
     new_grid = initialize_grid(N)
     results = []
-    results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((512,512)))
+    results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((256,256)))
 
     for t in range(T):
         init_grid = new_grid
         new_grid = update_grid(init_grid)
-        results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((512,512)))
+        results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((256,256)))
 
     results[0].save(O,
-               save_all=True, append_images=results[1:],duration=400, loop=0)
+               save_all=True, append_images=results[1:],duration=800, loop=0)
 
 
 
