@@ -18,7 +18,7 @@ def initialize_grid(N: int) -> np.ndarray:
     # Make a random array of shape (N, N), containing 0s and 1s
     ###########################################################
 
-    grid = np.random.randint(0, 2, size = (N, N))
+    grid = np.random.choice([0, 1], size=(N, N), p=[0.9, 0.1])
 
     return grid
 
@@ -124,14 +124,14 @@ def game_of_life(N: int, T: int, O: str):
     
     grid = initialize_grid(N)
     results = []
-    results.append(Image.fromarray(255 * grid.astype(np.uint8)).convert('RGB').resize((256,256)))
+    results.append(Image.fromarray(256 * grid.astype(np.uint8)).convert('RGB').resize((256,256)))
 
     for t in range(T):
         grid = update_grid(grid)
-        results.append(Image.fromarray(255 * grid.astype(np.uint8)).convert('RGB').resize((256,256)))
+        results.append(Image.fromarray(256 * grid.astype(np.uint8)).convert('RGB').resize((256,256)))
 
     results[0].save(O,
-               save_all=True, append_images=results[1:],duration=800, loop=0)
+               save_all=True, append_images=results[1:],duration=150, loop=0)
 
 
 
