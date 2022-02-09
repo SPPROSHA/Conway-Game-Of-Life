@@ -104,10 +104,13 @@ def update_grid(grid: np.ndarray) -> np.ndarray:
 
 
 
-def game_of_life(N: int, T: int, O:):
-    """Runs game of life for T timesteps on an NxN board. Saves the board as an animated gif image.
-        N (int): Size of board.
-        T (int): Number of timesteps.
+def game_of_life(N: int, T: int, O: str):
+    """Runs the game of life for T seconds on an NxN grid.
+
+    Args:
+        N (int): Board size
+        T (int): Time
+        O (str): Name of output file
     """
     
     print("Starting game.")
@@ -128,7 +131,7 @@ def game_of_life(N: int, T: int, O:):
         new_grid = update_grid(init_grid)
         results.append(Image.fromarray(255 * new_grid.astype(np.uint8)).convert('RGB').resize((512,512)))
 
-    results[0].save('out.gif',
+    results[0].save(O,
                save_all=True, append_images=results[1:],duration=400, loop=0)
 
 
